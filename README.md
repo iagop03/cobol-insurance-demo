@@ -127,32 +127,26 @@ La liquidación de comisiones usa el importe del recibo original (`REC_COMISION_
 pip install antcrew
 ```
 
-### Indexar el corpus
-
-```bash
-antcrew build-index --cobol-dir ./cobol-insurance-demo --out ./demo.db
-```
-
 ### Analizar un incidente
+
+El índice se construye automáticamente en el primer análisis:
 
 ```bash
 antcrew cobol-incident \
   "Clientes con más de 12 meses de impago están siendo rehabilitados con recargo incorrecto" \
-  --cobol-dir ./cobol-insurance-demo \
-  --index ./demo.db
+  --cobol-dir ./cobol-insurance-demo
 ```
 
 AntCrew identificará `REHPOL.cbl` como programa primario, trazará la cadena de llamadas hacia `MOVPOL` → `VALDAT`, y señalará la línea con `FUNCTION MOD` como origen del cálculo erróneo.
 
 ### Demo con SRS
 
-Para ver cómo AntCrew analiza el impacto de un nuevo requerimiento sobre el corpus:
+Para analizar el impacto de un nuevo requerimiento sobre el corpus:
 
 ```bash
 antcrew cobol-incident \
   "$(cat REQUIREMENTS.md)" \
-  --cobol-dir ./cobol-insurance-demo \
-  --index ./demo.db
+  --cobol-dir ./cobol-insurance-demo
 ```
 
 ## Tecnología representada
